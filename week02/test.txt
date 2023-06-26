@@ -1,0 +1,19 @@
+m1 = parseMessage "I 1020 pci_cacput13, oundow [io for isted"
+m2 = parseMessage "E 1 1137 'How queer it seems,' Alice said to herself, 'to be going messages for"
+m3 = parseMessage "I 5478 #78 (red, Cherruppows 00000fed, cootered SSDT BOOTMEM"
+m4 = parseMessage "I 2802 some time without interrupting it."
+m5 = parseMessage "I 731 mode.0: persicesoupda] BOOTMEM"
+m6 = parseMessage "I 3989 'I could tell you my adventures--beginning from this morning,' said"
+m7 = parseMessage "I 917 'Fury said to a"
+m8 = parseMessage "I 2546 Alice felt dreadfully puzzled. The Hatter's remark seemed to have no"
+m9 = parseMessage "I 2179 For he can thoroughly enjoy"
+t1 = insert m1 Leaf
+t2 = insert m2 t1
+t3 = insert m3 t2
+t4 = insert m4 t3
+t5 = insert m5 t4
+t6 = insert m6 t5
+t7 = insert m7 t6
+t8 = insert m8 t7
+
+messages = [ "I 1020 pci_cacput13, oundow [io for isted", "E 1 1137 'How queer it seems,' Alice said to herself, 'to be going messages for", "I 5478 #78 (red, Cherruppows 00000fed, cootered SSDT BOOTMEM", "I 2802 some time without interrupting it.", "I 731 mode.0: persicesoupda] BOOTMEM", "I 3989 'I could tell you my adventures--beginning from this morning,' said", "I 917 'Fury said to a", "I 2546 Alice felt dreadfully puzzled. The Hatter's remark seemed to have no", "I 2179 For he can thoroughly enjoy" ]

@@ -63,6 +63,33 @@ parse :: String -> [LogMessage]
 parse s = map parseMessage (lines s)
 
 
+insert :: LogMessage -> MessageTree -> MessageTree
+insert (Unknown _) t = t
+insert m Leaf        = Node Leaf m Leaf
+insert _ (Node _ (Unknown _) _) = error "Impossible program state! Tree canot contain Unknown messages"
+insert logMessage@(LogMessage _ insertTimestamp _) (Node lNode nodeLogMsg@(LogMessage _ nodeTimestamp _) rNode)
+    | insertTimestamp < nodeTimestamp = Node (insert logMessage lNode) nodeLogMsg rNode
+    | otherwise                       = Node lNode nodeLogMsg (insert logMessage rNode)
+
+
+build :: [LogMessage] -> MessageTree
+build = foldr insert Leaf
+
+inOrder :: MessageTree -> [LogMessage]
+inOrder Leaf = []
+inOrder (Node lNode message rNode) = (inOrder lNode) ++ [message] ++ (inOrder rNode)
+
+getMessage :: LogMessage -> String
+getMessage m = case m of
+               (LogMessage _ _ mStr) -> mStr
+               (Unknown mStr)        -> mStr
+
+whatWentWrong :: [LogMessage] -> [String]
+whatWentWrong ms = map getMessage $ inOrder (build (filter suitable ms))
+    where suitable m = case m of
+                       (LogMessage (Error severity) timestamp message) -> severity >= 50
+                       _                                               -> False
+
 
 
 main :: IO ()
@@ -99,30 +126,4 @@ main =  do
     print $ parseMessage "W 2429 [drm: 0xf4280 -> 0xfff"
     print $ parseMessage "I 165 ACPI by 14506 7 (v01000000 - 00 (us regis 00000017 [io 000: LNKBD,PNP0A08-0xcffer"
     print $ parseMessage "I 3373 Alice did not much like keeping so close to her: first, because the"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
