@@ -19,7 +19,16 @@ module Golf where
 -- 
 -- skips l = st7 l
 
-skips = takeWhile (/= []) $ map (\(n, lst) -> map snd $ filter (\(i, _) -> i `mod` n == 0) $ zip [1..] $ lst) $ zip [1..] $ repeat l
+skips l = takeWhile (/= []) $ map (\(n, lst) -> map snd $ filter (\(i, _) -> i `mod` n == 0) $ zip [1..] $ lst) $ zip [1..] $ repeat l
+
+localMaxima :: [Integer] -> [Integer]
+localMaxima (a:b:c:xs)
+    | a <= b && b > c = b : localMaxima (c:xs)
+    | otherwise       = localMaxima (b:c:xs)
+localMaxima _         = []
 
 
+-- localMaxima2 :: [Integer] -> [Integer]
+-- localMaxima2 xs = f xs
+--     where
 
