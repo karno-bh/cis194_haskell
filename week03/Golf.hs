@@ -1,5 +1,7 @@
 module Golf where
 
+import Data.List
+
 -- skips :: [a] -> [[a]]
 -- skips l = take (length l) (repeat l)
 
@@ -31,4 +33,18 @@ localMaxima _         = []
 -- localMaxima2 :: [Integer] -> [Integer]
 -- localMaxima2 xs = f xs
 --     where
+
+
+testList = [1,2,4,3,3,7,9,6,3]
+testList2 = [1,4,5,4,6,6,3,4,2,4,9]
+
+histoList l = map tail $ groupBy (==) $ sort (l ++ [0..9])
+maxLen l = maximum $ map length l
+toStars hl l = (replicate ((maxLen hl) - (length l)) ' ') ++ (replicate (length l) '*')
+histoMatrix l = transpose $ map (toStars hl) hl
+                where hl = histoList l
+histoLines l = (histoMatrix l) ++ ["==========", "0123456789"]
+
+histogram :: [Integer] -> String
+histogram = unlines . histoLines
 
