@@ -38,8 +38,9 @@ localMaxima _         = []
 testList = [1,2,4,3,3,7,9,6,3]
 testList2 = [1,4,5,4,6,6,3,4,2,4,9]
 
-histoList l = map tail $ groupBy (==) $ sort (l ++ [0..9])
-maxLen l = maximum $ map length l
+-- histoList l = map tail $ groupBy (==) $ sort (l ++ [0..9])
+histoList = map tail . groupBy (==) . sort . ([0..9]++)
+maxLen = maximum . map length
 toStars hl l = (replicate ((maxLen hl) - (length l)) ' ') ++ (replicate (length l) '*')
 histoMatrix l = transpose $ map (toStars hl) hl
                 where hl = histoList l
